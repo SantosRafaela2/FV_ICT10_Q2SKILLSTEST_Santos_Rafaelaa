@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>School Club Information</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #bffbdd;
+      min-height: 100vh;
+    }
+    .container-box {
+      background: #bbe3d2;
+      padding: 28px;
+      border-radius: 10px;
+      border: 2px solid #47725c;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header {
+      color: #426953;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .btn-green {
+      background-color: #47725c;
+      color: white;
+      border: none;
+    }
+    #clubInfo {
+      background: rgba(255,255,255,0.6);
+      border-radius: 6px;
+      padding: 16px;
+      min-height: 90px;
+      white-space: pre-wrap;
+      font-family: ui-monospace, monospace;
+    }
+    .label-inline { font-weight:700; color:#36523f; }
+  </style>
+</head>
+<body class="p-4">
+
+    <br><br>
+
+  <h2 class="text-center header mb-4">∘₊✧─ School Club Information ─✧₊∘</h2>
+
+  <br><br>
+
+  <div class="container-box">
+    <div class="mb-3">
+      <label class="fw-bold">Select a club:</label>
+      <select id="clubSelect" class="form-select">
+        <option value="" selected>-- Choose a club --</option>
+        <option value="Dance Club">Dance Club</option>
+        <option value="Marching Band">Marching Band</option>
+        <option value="Glee Club">Glee Club</option>
+        <option value="Math Club">Math Club</option>
+        <option value="Science Club">Science Club</option>
+        <option value="Communication Arts Club">Communication Arts Club</option>
+        <option value="COCC">COCC</option>
+        <option value="Social Science Club">Social Science Club</option>
+        <option value="Volleyball Varsity">Volleyball Varsity</option>
+      </select>
+    </div>
+
+    <div class="d-grid mb-3">
+      <button id="showBtn" type="button" class="btn btn-green">Show Club Information</button>
+    </div>
+
+    <div id="clubInfo" class="mb-2">
+      <div class="text-muted">Club details will appear here.</div>
+    </div>
+  </div>
+
+  <script>
+    // ✅ SIMPLE CLUB DICTIONARY (NO FLASK NEEDED)
+    const clubs = {
+      "Dance Club": {
+        description: "A group for students who love performing and dancing.",
+        meeting_time: "Tuesday 03:00 - 05:00 PM",
+        location: "Teatro Preciosa",
+        moderator: "Mr. Alfred Cases",
+        members: "N/A",
+        category: "Performing Arts"
+      },
+
+      "Marching Band": {
+        description: "School marching band for performances and competitions.",
+        meeting_time: "Tuesday & Wednesday 03:00 - 4:30 PM",
+        location: "Band Room",
+        moderator: "Mr. Emilio Alumno",
+        members: "N/A",
+        category: "Performing Arts"
+      },
+
+      "Glee Club": {
+        description: "Singing group for music-loving students.",
+        meeting_time: "Monday 03:00 - 05:00 PM",
+        location: "High School Music Room",
+        moderator: "Mr. Denver Martin",
+        members: "N/A",
+        category: "Music"
+      },
+
+      "Math Club": {
+        description: "A club for students who enjoy mathematics.",
+        meeting_time: "Monday 02:30 - 03:00 PM",
+        location: "Room 404",
+        moderator: "Mr. Nicole Gabuya",
+        members: "N/A",
+        category: "Academic"
+      },
+
+      "Science Club": {
+        description: "Hands-on science activities and experiments.",
+        meeting_time: "Tuesday 03:00 - 04:00 PM",
+        location: "Room 404",
+        moderator: "Ms. Jameelyn Maramag",
+        members: "N/A",
+        category: "Academic"
+      },
+
+      "Communication Arts Club": {
+        description: "A club for students interested in writing, theater, and media.",
+        meeting_time: "Wednesday 03:00 - 04:00 PM, Friday 03:00 - 04:00 PM",
+        location: "Room 406",
+        moderator: "Ms. Yannis Fernandez",
+        members: "N/A",
+        category: "Arts"
+      },
+
+      "COCC": {
+        description: "Cadet officer candidate course.",
+        meeting_time: "Wednesday 02:30 - 04:30 PM",
+        location: "Quadrangle / Teatro Preciosa",
+        moderator: "SSgt. Jemima David PA (Res)",
+        members: "N/A",
+        category: "Leadership"
+      },
+
+      "Social Science Club": {
+        description: "A club about history, people, and society.",
+        meeting_time: "Tuesday 03:00 - 04:00 PM",
+        location: "Room 409",
+        moderator: "N/A",
+        members: "N/A",
+        category: "Academic"
+      },
+
+      "Volleyball Varsity": {
+        description: "Varsity training for volleyball athletes.",
+        meeting_time: "Wednesday 03:00 - 04:00 PM",
+        location: "Volleyball Court",
+        moderator: "Mr. Adrian Ruiz",
+        members: "N/A",
+        category: "Sports"
+      }
+    };
+
+    // 🟢 FUNCTION TO DISPLAY CLUB INFO
+    function renderClubInfo(clubName) {
+      const infoBox = document.getElementById("clubInfo");
+
+      if (!clubName || !clubs[clubName]) {
+        infoBox.innerHTML = `<div class='text-muted'>Please select a club first.</div>`;
+        return;
+      }
+
+      const c = clubs[clubName];
+      infoBox.innerHTML = `
+        <strong style="font-size:1.2rem">${clubName}</strong>
+        <hr>
+        <p><b>Description:</b> ${c.description}</p>
+        <p><b>Meeting Time:</b> ${c.meeting_time}</p>
+        <p><b>Venue:</b> ${c.location}</p>
+        <p><b>Moderator:</b> ${c.moderator}</p>
+        <p><b>Members:</b> ${c.members}</p>
+        <p><b>Category:</b> ${c.category}</p>
+      `;
+    }
+
+    // BUTTON CLICK EVENT
+    document.getElementById("showBtn").onclick = function () {
+      const selected = document.getElementById("clubSelect").value;
+      renderClubInfo(selected);
+    };
+  </script>
+
+</body>
+</html>
